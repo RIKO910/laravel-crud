@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryStoreRequest;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -12,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories =Category::get(['id','name','created_at']);
+        return view('Component.Category.index',compact('categories'));
     }
 
     /**
@@ -26,20 +30,18 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        $request->validate([
-            'category_name'=> 'required|string|alpha',
-            'category_slug,'=> 'required|string|alpha',
-            'is_active'=> 'required',
-        ]);
-        dd($request->all());
+
+        // dd($request->all());
 
         Category::create([
             'name' => $request->category_name,
-            'slug' => $request->category_slug,
+            'slug' => Str::slug($request->category_name),
             'is_active' => $request->filled('is_active'),
         ]);
+
+        Session::flash('Status','Category created Successfully!');
         return back();
     }
 

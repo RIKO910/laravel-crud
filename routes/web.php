@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/category', CategoryController::class);
+
+Route::get('/about', function () {
+    return view('Component.Category.about');
+});
