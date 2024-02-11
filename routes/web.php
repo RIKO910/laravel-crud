@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('Component.Master');
+    return view('Component.Home.Home');
 });
 
 Route::resource('/category', CategoryController::class);

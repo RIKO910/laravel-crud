@@ -13,6 +13,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Date and Time</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -21,6 +22,14 @@
                     <th scope="row">{{ $category->id }}</th>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->created_at->diffForHumans() }}</td>
+                    <td>
+                        <a href="{{ route('category.edit',['category'=>$category->id]) }}" class="btn btn-info">Edit</a>
+                        <form action="{{ route( 'category.destroy',['category'=>$category->id ] )}}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button href="" type="submit" class="btn btn-danger">DEl</button>
+                        </form>
+                    </td>
                   </tr>
                 @endforeach
             </tbody>
